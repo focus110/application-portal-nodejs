@@ -6,8 +6,8 @@ module.exports = new Sequelize(
   dbConnection.USER,
   dbConnection.PASSWORD,
   {
-    host: "localhost",
-    dialect: "mysql",
+    host: process.env.host,
+    dialect: process.env.dialect,
 
     pool: {
       max: 5,
