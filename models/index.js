@@ -18,7 +18,7 @@ db.sequelize = sequelize;
 
 db.login = require("./Users.js")(sequelize, DataTypes);
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 module.exports = db;

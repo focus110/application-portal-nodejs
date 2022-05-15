@@ -2,6 +2,7 @@ const db = require("../db/db");
 const Sequelize = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const profileImage = require("../models/profileImage");
+const url_id = require("./profileImage");
 
 const User = db.define("users", {
   id: {
@@ -51,6 +52,14 @@ const User = db.define("users", {
     },
     defaultValue: "student",
   },
+  course: {
+    type: Sequelize.JSON,
+    allowNull: false,
+    validator: {
+      notEmpty: true,
+    },
+    defaultValue: {},
+  },
   accountStatus: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -82,6 +91,12 @@ const User = db.define("users", {
       notEmpty: true,
     },
     defaultValue: "",
+  },
+  profileImg_id: {
+    type: Sequelize.DataTypes.UUID,
+    defaultValue: url_id.profileImg_id,
+    required: true,
+    allowNull: true,
   },
   password: {
     type: Sequelize.STRING,

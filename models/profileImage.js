@@ -3,14 +3,14 @@ const Sequelize = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 
 const profileImage = db.define("profileImage", {
-  id: {
+  profileImg_id: {
     type: Sequelize.DataTypes.UUID,
     defaultValue: function () {
       return uuidv4();
     },
     primaryKey: true,
   },
-  profileimg: {
+  profileImg: {
     type: Sequelize.STRING,
     allowNull: false,
     validator: {

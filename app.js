@@ -1,5 +1,6 @@
 const express = require("express");
 const users = require("./routes/users");
+const profileImage = require("./routes/profileImage");
 const cors = require("cors");
 
 // database
@@ -19,13 +20,16 @@ app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
 app.use("/users", users);
+app.use("/profileImage", profileImage);
 
 // simple route
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
-db.sync();
+db.sync({ force: true }).then(() => {
+  console.log("Drop and re-sync db.");
+});
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
