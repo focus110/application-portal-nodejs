@@ -1,12 +1,13 @@
 const Sequelize = require("sequelize");
 const dbConnection = require("../config/dbConfig.js");
+require("dotenv").config();
 
 module.exports = new Sequelize(
   dbConnection.DB,
   dbConnection.USER,
   dbConnection.PASSWORD,
   {
-    host: process.env.host,
+    host: "localhost",
     dialect: process.env.dialect,
 
     pool: {
