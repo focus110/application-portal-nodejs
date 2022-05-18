@@ -1,6 +1,5 @@
 const express = require("express");
 const users = require("./routes/users");
-const profileImage = require("./routes/profileImage");
 const cors = require("cors");
 
 // database
@@ -20,7 +19,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
 app.use("/users", users);
-app.use("/profileImage", profileImage);
 
 // simple route
 app.get("/", (req, res) => {

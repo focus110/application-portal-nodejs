@@ -43,11 +43,3 @@ router.post("/forget-password", (req, res) => {
 router.delete("/:id", [authUser], deleteUserById);
 
 module.exports = router;
-
-// router.get("/", checkAuth, createuser);
-// router.get("/", (req, res) => {
-//   console.log("user route");
-//   res.send("users");
-// });
-
-module.exports = router;

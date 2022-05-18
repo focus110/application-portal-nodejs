@@ -1,7 +1,13 @@
 const response = require("../helper/response");
 const User = require("../models/User");
+const UserOTP = require("../models/UserOTP");
+// const Profile = require("../models/profile");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
+
+// nodemailer
+const nodemailer = require("nodemailer");
 
 // Config import
 const { secret } = require("../config/dbConfig");
@@ -146,7 +152,43 @@ class UserController {
           .status(500)
           .send(response("The user can not be created", {}, false));
 
-      res.send(response("User was created successfully", user));
+      const { id } = user;
+
+      const otp = `${Math.floor(1000 + Math.random() * 9000)}`;
+
+      const hashedOTP = await bcrypt.hash(otp, 10);
+
+      // save users OTP
+      const userOTPS = await UserOTP.create({
+        foreign_key: id,
+        otp: hashedOTP,
+      });
+
+      // // create reusable transporter object using the default SMTP transport
+      // let transporter = nodemailer.createTransport({
+      //   host: "tekki.com.ng",
+
+      //   auth: {
+      //     user: "noreply@gmail.com",
+      //     pass: "tyxjef-pefde4-mIngeg",
+      //   },
+      // });
+
+      // let mailOptions = {
+      //   from: `"Fred Foo 👻" th894hru9b49br@gmail.com`, // sender address
+      //   to: `${email},`, // list of receivers
+      //   subject: "Hello ✔", // Subject line
+      //   text: `Otp ${otp}`, // plain text body
+      //   html: `<b>${otp}</b>`, // html body
+      // };
+
+      // // send mail with defined transport object
+      // transporter.sendMail(mailOptions, function (e, info) {
+      //   if (e) console.log(e);
+      //   if (!e) console.log("Message sent: %s", info.messageId);
+      // });
+
+      res.send(response("User was created successfully", { user, userOTPS }));
     } catch (err) {
       console.log(err.message);
     }
